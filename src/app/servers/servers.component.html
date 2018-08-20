@@ -1,0 +1,60 @@
+<label>Details</label>
+<p>The next button will show and unshow the text by clicking + it will count all the clicks + and will use ngClass and ngStyle to design the info starting from the 5th click.</p>
+<hr>	
+
+<button
+	class="btn btn-primary"	
+	(click)="onToggleParagraph()"	
+>
+	Display Details (show and unshow by clicking)
+</button>
+
+<hr>
+<p *ngIf="toggleThisData">Secret Password: Tuna</p>
+<hr>
+<ul *ngFor="let singleClick of displayClicks; index as i">
+	<li 
+		[ngClass]="{design: i > 3}" 
+		[ngStyle]=" i > 3 && {backgroundColor: '#b8b8c1'}"
+	>{{ singleClick }}</li>
+</ul>
+<!-- It is also possible using [ngStyle]="{backgroundColor: i > 3 ? '#b8b8c1' : 'transparent'}" -->
+
+<label>Userame</label>
+<input 
+	type="text"
+	class="form-control"
+	[(ngModel)]="username">
+<p>{{ username }}</p>
+<button 
+	class="btn btn-primary" 
+	[disabled]="!checkUsername()" 
+	(click)="resetUsername()">I work if username is not empty (click me to reset the username)</button>
+<hr>
+<label>Server Name</label>
+<!-- <input 
+	type="text"
+	class="form-control"
+	(input)="onUpdateServerName($event)"> -->
+<input 
+	type="text"
+	class="form-control"
+	[(ngModel)]="serverName">
+<!-- <p>{{ serverName }}</p> -->
+<button 
+	class="btn btn-primary" 
+	[disabled]="!allowNewServer" 
+	(click)="onCreateServer()"
+>Add Server (disabled for 3 seconds)</button>
+<!-- <p>{{ serverCreationStatus }}</p> -->
+<p *ngIf="serverCreated; else noServer">Server was created and the server name is {{ serverName }}</p>
+<ng-template #noServer>
+	<p>No server was created</p>
+</ng-template>
+
+<!-- These 2 <P> tags are the same -->
+<!-- <p> {{ allowNewServer }}</p>
+<p [innerText]="allowNewServer"></p> -->
+
+
+<app-server *ngFor="let server of servers" [serverName]="serverName"></app-server>
